@@ -39,8 +39,9 @@ func main() {
 
 	//TestSearch()//1.search
 	//TestSp()//2.sp
-	TestWithParam()    //3.query with param
-	TestSpWithParam2() //4.sp with param
+	//TestWithParam()    //3.query with param
+	//TestSpWithParam2() //4.sp with param
+	TestSpWithParam3()
 
 }
 
@@ -74,6 +75,21 @@ func TestSpWithParam2() {
 	fruitParam.Code = "A2"
 	f := []Fruit{}
 	err := msdb.Select(&f, "up_Fruit_R2 @Code = ?", "A2")
+	if err != nil {
+		fmt.Println("err:", err)
+	}
+
+	fmt.Printf("%+v", f)
+
+}
+
+func TestSpWithParam3() {
+
+	fruitParam := new(FruitParam)
+	fruitParam.Code = "A2"
+	f := []Fruit{}
+	spText := fmt.Sprintf("up_Fruit_R2 @Code = %v", "A2")
+	err := msdb.Select(&f, spText)
 	if err != nil {
 		fmt.Println("err:", err)
 	}
